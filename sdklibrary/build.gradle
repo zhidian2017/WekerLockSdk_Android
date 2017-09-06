@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+//0f5f85fbc8e2cfdd9e9d953799d6f15b369c3239
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+    compile 'com.qindachang:BluetoothLELibrary:0.7.4'
+}
+publish {
+    userOrg = 'zhidian'//bintray.com
+    groupId = 'com.zhidian'//jcenter上的路径
+    artifactId = 'wekerLock'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'weker蓝牙锁开发协议'//描述，不重要
+    website = 'https://github.com/zhidian2017'//网站，不重要
+}
