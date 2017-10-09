@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 WekerLockLibrary.getInstance().addLock(MainActivity.this, "18768122165", new CallBack<LockModel>() {
                     @Override
                     public void onSuccess(LockModel result) {
-                        Log.e(TAG, "onSuccess: "+result.getLockPassword() );
+                        Log.e(TAG, "onSuccess: "+result.toString() );
                     }
 
                     @Override

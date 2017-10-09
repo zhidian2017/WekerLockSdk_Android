@@ -237,6 +237,9 @@ public class WekerLockImpl {
             }
         }else if (byteAllData[2]==3){
             /**开门结果**/
+            if (callBack == null) {
+                return;
+            }
             if (byteAllData[6] == 0) {
                 callBack.onSuccess("开门成功");
             }else if (byteAllData[6]==1){

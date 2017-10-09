@@ -20,6 +20,17 @@ public class LockModel {
         this.lockEnergy = lockEnergy;
     }
 
+    @Override
+    public String toString() {
+        return "LockModel{" +
+                "lockName='" + lockName + '\'' +
+                ", lockNumber='" + lockNumber + '\'' +
+                ", lockPassword='" + lockPassword + '\'' +
+                ", lockInfoDesc='" + lockInfoDesc + '\'' +
+                ", lockEnergy='" + lockEnergy + '\'' +
+                '}';
+    }
+
     public String getLockName() {
         return lockName;
     }
