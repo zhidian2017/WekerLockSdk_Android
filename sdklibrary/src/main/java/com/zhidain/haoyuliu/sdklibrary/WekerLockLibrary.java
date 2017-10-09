@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.zhidain.haoyuliu.sdklibrary.bluetooth.CallBack;
 import com.zhidain.haoyuliu.sdklibrary.bluetooth.impl.WekerLockImpl;
+import com.zhidain.haoyuliu.sdklibrary.model.LockModel;
 
 
 public class WekerLockLibrary {
@@ -43,7 +44,7 @@ public class WekerLockLibrary {
      * @param phone
      * @param callBack
      */
-    public void addLock(Activity activity, String phone, CallBack<String>callBack){
+    public void addLock(Activity activity, String phone, CallBack<LockModel>callBack){
         sInstance.addLock(activity,phone,callBack);
     }
     /**

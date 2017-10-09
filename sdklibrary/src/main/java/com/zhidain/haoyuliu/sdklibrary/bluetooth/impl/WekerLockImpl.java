@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.widget.Toast;
 
 import com.qindachang.bluetoothle.BluetoothLe;
@@ -21,6 +22,7 @@ import com.zhidain.haoyuliu.sdklibrary.BlueToothApi;
 import com.zhidain.haoyuliu.sdklibrary.Constants;
 import com.zhidain.haoyuliu.sdklibrary.bluetooth.CallBack;
 import com.zhidain.haoyuliu.sdklibrary.model.KeyModel;
+import com.zhidain.haoyuliu.sdklibrary.model.LockModel;
 import com.zhidain.haoyuliu.sdklibrary.utils.CrcUtils;
 
 import java.util.Arrays;
@@ -47,6 +49,7 @@ public class WekerLockImpl {
     private Context context;
     private Activity activity;
     private CallBack<String> callBack;
+    private CallBack<LockModel>lockCallBack;
     private String userPwd;
     private String userAuth;
     private String startTime;
@@ -212,6 +215,10 @@ public class WekerLockImpl {
                 for (int i = 0; i < 10; i++) {
                     randowPwd.append((char)byteRandowPwd[i]);
                 }
+               StringBuilder byteVersionSb = new StringBuilder();
+                for (int i = 0; i <byteVersion.length ; i++) {
+                    byteVersionSb.append((char)byteVersion[i]);
+                }
                 mBlueToothApi.addLockSuccess();
                 Log.e(TAG, "handleByteData: "+Arrays.toString(byteRandowPwd) );
                 try {
@@ -223,9 +230,10 @@ public class WekerLockImpl {
                 keyModel.setLockPassword(randowPwd.toString());
                 keyModel.setUserLockId("0");
                 mBlueToothApi.openLock(macAddress,byteActivePwd,keyModel);
-                callBack.onSuccess(randowPwd.toString());
+                LockModel lockModel = new LockModel("myLock",macAddress,randowPwd.toString(),byteVersionSb.toString(),energy);
+                lockCallBack.onSuccess(lockModel);
             }else {
-                callBack.onError(new Throwable("该锁已有管理员，请重置后添加"));
+                lockCallBack.onError(new Throwable("该锁已有管理员，请重置后添加"));
             }
         }else if (byteAllData[2]==3){
             /**开门结果**/
@@ -278,10 +286,10 @@ public class WekerLockImpl {
      * @param phone
      * @param callBack
      */
-    public void addLock(Activity activity, String phone, CallBack<String>callBack){
+    public void addLock(Activity activity, String phone, CallBack<LockModel>callBack){
         Log.e(TAG, "addLock: "+phone );
         this.phone = phone;
-        this.callBack = callBack;
+        this.lockCallBack = callBack;
         this.activity = activity;
         cmdType = 0;
         startScan();

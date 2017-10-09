@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import com.zhidain.haoyuliu.sdklibrary.WekerLockLibrary;
 import com.zhidain.haoyuliu.sdklibrary.bluetooth.CallBack;
+import com.zhidain.haoyuliu.sdklibrary.model.LockModel;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -23,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "onClick: " );
-                WekerLockLibrary.getInstance().addLock(MainActivity.this, "18768122165", new CallBack<String>() {
+                WekerLockLibrary.getInstance().addLock(MainActivity.this, "18768122165", new CallBack<LockModel>() {
                     @Override
-                    public void onSuccess(String result) {
-                        Log.e(TAG, "onSuccess: "+result );
+                    public void onSuccess(LockModel result) {
+                        Log.e(TAG, "onSuccess: "+result.getLockPassword() );
                     }
 
                     @Override
